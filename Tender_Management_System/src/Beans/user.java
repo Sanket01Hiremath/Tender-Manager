@@ -4,8 +4,8 @@ public class user {
 	int id;
 	String username;
 	String password;
-	String userType;
-	public user(int id, String username, String password, String userType) {
+	int userType;
+	public user(int id, String username, String password, int userType) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -34,10 +34,10 @@ public class user {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getUserType() {
+	public int getUserType() {
 		return userType;
 	}
-	public void setUserType(String userType) {
+	public void setUserType(int userType) {
 		this.userType = userType;
 	}
 }

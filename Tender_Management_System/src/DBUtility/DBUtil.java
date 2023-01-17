@@ -11,7 +11,7 @@ public class DBUtil {
     private static String username;
     private static String password;
 	static {
-        ResourceBundle rb= ResourceBundle.getBundle("dbdetails");
+        ResourceBundle rb= ResourceBundle.getBundle("TenderManagement");
 
         url= rb.getString("db.url");
         driverName= rb.getString("db.drivername");
