@@ -13,6 +13,7 @@ import Beans.user;
 import DBUtility.DBUtil;
 import Exception.UserException;
 import Exception.tenderException;
+import Start.login;
 import Vendor.VendorMenu;
 
 
@@ -36,10 +37,14 @@ public class Methods_Impl implements Methods{
 					v.Vmenu(rs.getInt("ID"));
 				}
 			}else {
-				throw new UserException("ERROR: User Not Found!");
+				System.out.println("Error: User Not Found!");
+				login l=new login();
+				l.Login();
 			}
 		} catch (SQLException e) {
-			throw new UserException("ERROR: User Not Found!");
+			System.out.println("Error: User Not Found!");
+			login l=new login();
+			l.Login();
 		}
 	}
 

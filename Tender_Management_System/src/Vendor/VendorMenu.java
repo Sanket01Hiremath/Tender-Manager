@@ -2,10 +2,13 @@ package Vendor;
 
 import java.util.Scanner;
 
+import Exception.UserException;
+import Exception.tenderException;
+import Start.login;
+
 public class VendorMenu {
-	public void Vmenu(int id){
+	public void Vmenu(int id) throws UserException, tenderException{
 		Scanner sc=new Scanner(System.in);
-		System.out.println("Welcome "+id);
 		System.out.println(":------------------------------: Vendor Menu");
 		System.out.println("1) Get All Tendors");
 		System.out.println("2) Place Bid For Tenders");
@@ -25,7 +28,8 @@ public class VendorMenu {
 			break;
 		case 4:
 			break;
-		case 5:
+		case 5:login l=new login();
+			l.Login();
 			break;
 		}
 	}
