@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Administrator.AdminMenu;
+import Beans.Bid;
 import Beans.tender;
 import Beans.user;
 import DBUtility.DBUtil;
@@ -43,6 +44,7 @@ public class Methods_Impl implements Methods{
 			}
 		} catch (SQLException e) {
 			System.out.println("Error: User Not Found!");
+			System.out.println(e.getMessage());
 			login l=new login();
 			l.Login();
 		}
@@ -58,16 +60,17 @@ public class Methods_Impl implements Methods{
 			ps.setString(3, User.getPassword());
 			ps.setInt(4, User.getUserType());
 			ps.executeUpdate();
-			System.out.println("New User Added!");
+			System.out.println("New Vendor Added!");
 			AdminMenu a=new AdminMenu();
 			a.Amenu(User.getId());
 		} catch (SQLException e) {
+			System.out.println("Error: Vendor Not Added!");
 			System.out.println(e.getMessage());
 		}
 	}
 
 	@Override
-	public List<user> getAllVendors() throws UserException {
+	public List<user> getAllVendors(){
 		List<user> list=new ArrayList<>();
 		Connection conn=DBUtil.getConnection();
 		try {
@@ -78,9 +81,10 @@ public class Methods_Impl implements Methods{
 			}
 			return list;
 		} catch (SQLException e) {
+			System.out.println("Error: Vendors Not Found!");
 			System.out.println(e.getMessage());
-			throw new UserException("ERROR: Users Not Found!");
 		}
+		return list;
 	}
 
 	@Override
@@ -97,6 +101,7 @@ public class Methods_Impl implements Methods{
 			AdminMenu a=new AdminMenu();
 			a.Amenu(id);
 		} catch (SQLException e) {
+			System.out.println("Error: New Tender Not Added!");
 			System.out.println(e.getMessage());
 		}
 	}
@@ -113,9 +118,103 @@ public class Methods_Impl implements Methods{
 			}
 			return list;
 		} catch (SQLException e) {
+			System.out.println("Error: Tenders Not Found!");
 			System.out.println(e.getMessage());
-			throw new tenderException("ERROR: Tenders Not Found!");
+			
 		}
+		return list;
+	}
+
+	@Override
+	public List<Bid> getAllBids(int id) {
+		List<Bid> list=new ArrayList<>();
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("select * from bids where tenderID=?");
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Bid(rs.getInt("tenderID"),rs.getInt("vendorID"),rs.getInt("bidPrice")));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
+
+	@Override
+	public int[] MaxBid(int id) {
+		int[] arr=new int[2];
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("select vendorID,MAX(bidPrice) as bidPrice from bids where tenderID=?");
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				arr[0]=rs.getInt("vendorID");
+				arr[1]=rs.getInt("bidPrice");
+			}
+			return arr;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return arr;
+	}
+
+	@Override
+	public void assignTender(int Tid, int Vid, int bidPrice) {
+		Connection conn=DBUtil.getConnection();
+		try(PreparedStatement ps=conn.prepareStatement("update tendor set vendorID=?,bidPrice=?,status=1 where ID=? AND status=0")) {
+			ps.setInt(1, Vid);
+			ps.setInt(2, bidPrice);
+			ps.setInt(3, Tid);
+			int i=ps.executeUpdate();
+			if(i==1) {
+				System.out.println("Tender "+Tid+" Assigned To Vendor "+Vid+" At Price "+bidPrice);
+			}else {
+				System.out.println("Error: Tender Not Found");
+			}
+		} catch (SQLException e) {
+			
+			System.out.println(e.getMessage());
+		}
+		
+	}
+
+	@Override
+	public void deleteTender(int Tid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from tendor where ID=?");
+			ps.setInt(1, Tid);
+			int i=ps.executeUpdate();
+			if(i==1) {
+				System.out.println("Tender Deleted Successfully!");
+			}else {
+				System.out.println("Error: Tender Not Found");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Override
+	public void deleteVendor(int Vid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from users where ID=? AND user=2");
+			ps.setInt(1, Vid);
+			int i=ps.executeUpdate();
+			if(i==1) {
+				System.out.println("Vendor Deleted Successfully!");
+			}else {
+				System.out.println("Error: Vendor Not Found");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 }
