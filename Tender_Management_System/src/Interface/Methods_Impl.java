@@ -148,7 +148,7 @@ public class Methods_Impl implements Methods{
 		int[] arr=new int[2];
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select vendorID,MAX(bidPrice) as bidPrice from bids where tenderID=?");
+			PreparedStatement ps=conn.prepareStatement("select vendorID,bidPrice from bids where tenderID=? order by bidPrice DESC LIMIT 1");
 			ps.setInt(1, id);
 			ResultSet rs=ps.executeQuery();
 			if(rs.next()) {
@@ -214,7 +214,79 @@ public class Methods_Impl implements Methods{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
-		
+	}
+
+	@Override
+	public void placeBid(int tid,int vid,int amount) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("insert into bids values(?,?,?)");
+			ps.setInt(1, tid);
+			ps.setInt(2, vid);
+			ps.setInt(3, amount);
+			ps.executeUpdate();
+			System.out.println("Bid Placed");
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Override
+	public List<tender> openTenders() {
+		List<tender> list=new ArrayList<>();
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("select * from tendor where status=0");
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				list.add(new tender(rs.getInt("ID"),rs.getString("name"),rs.getString("type"),rs.getInt("amount"),rs.getInt("bidPrice"),rs.getInt("status"),rs.getInt("vendorID")));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("Error: Tenders Not Found!");
+			System.out.println(e.getMessage());
+			
+		}
+		return list;
+	}
+
+	@Override
+	public List<Bid> AllBidsOfVendor(int tid,int vid) {
+		List<Bid> list=new ArrayList<>();
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("select * from bids where tenderID=? AND vendorID=?");
+			ps.setInt(1, tid);
+			ps.setInt(2, vid);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				list.add(new Bid(rs.getInt("tenderID"),rs.getInt("vendorID"),rs.getInt("bidPrice")));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		return list;
+	}
+
+	@Override
+	public List<tender> AllTendersOfVendor(int id) {
+		List<tender> list=new ArrayList<>();
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("select * from tendor where vendorID=?");
+			ps.setInt(1, id);
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				list.add(new tender(rs.getInt("ID"),rs.getString("name"),rs.getString("type"),rs.getInt("amount"),rs.getInt("bidPrice"),rs.getInt("status"),rs.getInt("vendorID")));
+			}
+			return list;
+		} catch (SQLException e) {
+			System.out.println("Error: Tenders Not Found!");
+			System.out.println(e.getMessage());
+			
+		}
+		return list;
 	}
 
 }
