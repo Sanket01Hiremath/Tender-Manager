@@ -29,5 +29,6 @@ public class AllBids {
 		}
 		AdminMenu a=new AdminMenu();
 		a.Amenu(id);
+		
 	}
 }
