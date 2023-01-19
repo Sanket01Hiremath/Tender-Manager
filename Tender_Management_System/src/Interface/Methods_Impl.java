@@ -276,6 +276,7 @@ public class Methods_Impl implements Methods{
 		try {
 			PreparedStatement ps=conn.prepareStatement("select * from tendor where vendorID=?");
 			ps.setInt(1, id);
+			
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
 				list.add(new tender(rs.getInt("ID"),rs.getString("name"),rs.getString("type"),rs.getInt("amount"),rs.getInt("bidPrice"),rs.getInt("status"),rs.getInt("vendorID")));
