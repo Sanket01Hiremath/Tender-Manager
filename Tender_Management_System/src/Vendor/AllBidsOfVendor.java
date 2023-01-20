@@ -28,5 +28,6 @@ public class AllBidsOfVendor {
 		System.out.println(":------------------------------------------:");
 		VendorMenu vm=new VendorMenu();
 		vm.Vmenu(id);
+		
 	}
 }
