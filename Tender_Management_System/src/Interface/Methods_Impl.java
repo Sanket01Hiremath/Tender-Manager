@@ -189,7 +189,7 @@ public class Methods_Impl implements Methods{
 			PreparedStatement ps=conn.prepareStatement("delete from tendor where ID=?");
 			ps.setInt(1, Tid);
 			int i=ps.executeUpdate();
-			if(i==1) {
+			if(i==0) {
 				System.out.println("Tender Deleted Successfully!");
 			}else {
 				System.out.println("Error: Tender Not Found");
@@ -206,7 +206,7 @@ public class Methods_Impl implements Methods{
 			PreparedStatement ps=conn.prepareStatement("delete from users where ID=? AND user=2");
 			ps.setInt(1, Vid);
 			int i=ps.executeUpdate();
-			if(i==1) {
+			if(i==0) {
 				System.out.println("Vendor Deleted Successfully!");
 			}else {
 				System.out.println("Error: Vendor Not Found");
@@ -215,7 +215,62 @@ public class Methods_Impl implements Methods{
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	@Override
+	public void deleteBidByTid(int tid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from bids where tenderID=?");
+			ps.setInt(1, tid);
+			int i=ps.executeUpdate();
+			if(i==0) {
+				System.out.println("Vendor Deleted Successfully!");
+			}else {
+				System.out.println("Error: Vendor Not Found");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
 
+	@Override
+	public void deleteBidByVid(int vid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from bids where vendorID=?");
+			ps.setInt(1, vid);
+			int i=ps.executeUpdate();
+			if(i==0) {
+				System.out.println("Vendor Deleted Successfully!");
+			}else {
+				System.out.println("Error: Vendor Not Found");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	@Override
+	public void deleteBid(int vid, int tid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from bids where vendorID=? AND tenderID=?");
+			ps.setInt(1, vid);
+			ps.setInt(2, tid);
+			int i=ps.executeUpdate();
+			if(i==0) {
+				System.out.println("Vendor Deleted Successfully!");
+			}else {
+				System.out.println("Error: Vendor Not Found");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
 	@Override
 	public void placeBid(int tid,int vid,int amount) {
 		Connection conn=DBUtil.getConnection();
@@ -289,5 +344,7 @@ public class Methods_Impl implements Methods{
 		}
 		return list;
 	}
+
+	
 
 }
