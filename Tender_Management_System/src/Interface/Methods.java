@@ -19,6 +19,9 @@ public interface Methods {
 	public void assignTender(int Tid,int Vid,int bidPrice);
 	public void deleteTender(int Tid);
 	public void deleteVendor(int Vid);
+	public void deleteBidByTid(int tid);
+	public void deleteBidByVid(int vid);
+	public void deleteBid(int vid,int tid);
 	public List<tender> openTenders();
 	public void placeBid(int tid,int vid,int amount);
 	public List<Bid> AllBidsOfVendor(int tid,int vid);

@@ -14,6 +14,7 @@ public class deleteTender {
 		Scanner sc=new Scanner(System.in);
 		System.out.print("Enter TenderID: ");
 		int Tid=sc.nextInt();
+		m.deleteBidByTid(Tid);
 		m.deleteTender(Tid);
 		AdminMenu a=new AdminMenu();
 		a.Amenu(id);
