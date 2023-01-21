@@ -30,6 +30,7 @@ public class placeBid {
 			m.placeBid(tid, id, amount);
 		}else {
 			System.out.println("Open Tenders Not Available At This Moment!");
+			
 		}
 		VendorMenu vm=new VendorMenu();
 		vm.Vmenu(id);

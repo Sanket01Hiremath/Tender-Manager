@@ -289,18 +289,4 @@ public class Methods_Impl implements Methods{
 		return list;
 	}
 
-	@Override
-	public void UpdatePassword(int id,String password) {
-		Connection conn=DBUtil.getConnection();
-		try {
-			PreparedStatement ps=conn.prepareStatement("update users set password=? where ID=? AND user=2");
-			ps.setString(1, password);
-			ps.setInt(2, id);
-			ps.executeUpdate();
-			System.out.println("Password Updated!");
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
 }

@@ -45,8 +45,8 @@ public class AdminMenu {
 		case 7:deleteTender dt=new deleteTender();
 			dt.deletetender(id);
 			break;
-		case 8:DeleteVendor dv=new DeleteVendor();
-			dv.deleteVendor(id);
+		case 8:deleteVendor dv=new deleteVendor();
+			dv.DeleteVendor(id);
 			break;
 		case 9:login l=new login();
 			l.Login();

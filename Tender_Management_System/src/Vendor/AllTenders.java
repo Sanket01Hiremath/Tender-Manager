@@ -26,5 +26,6 @@ public class AllTenders {
 		}
 		VendorMenu vm=new VendorMenu();
 		vm.Vmenu(id);
+		
 	}
 }

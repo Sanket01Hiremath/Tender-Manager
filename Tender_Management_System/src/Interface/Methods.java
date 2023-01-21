@@ -23,5 +23,4 @@ public interface Methods {
 	public void placeBid(int tid,int vid,int amount);
 	public List<Bid> AllBidsOfVendor(int tid,int vid);
 	public List<tender> AllTendersOfVendor(int id);
-	public void UpdatePassword(int id,String password);
 }
