@@ -181,7 +181,9 @@ public class Methods_Impl implements Methods{
 		}
 		
 	}
-
+	
+	
+	
 	@Override
 	public void deleteTender(int Tid) {
 		Connection conn=DBUtil.getConnection();
@@ -214,6 +216,44 @@ public class Methods_Impl implements Methods{
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	@Override
+	public void deleteBid(int tid, int vid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from Bids where vendorID=? AND tenderID=?");
+			ps.setInt(1, vid);
+			ps.setInt(2, tid);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	@Override
+	public void deleteBidByTid(int tid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from Bids where vendorID=?");
+			ps.setInt(2, tid);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Override
+	public void deleteBidByVid(int vid) {
+		Connection conn=DBUtil.getConnection();
+		try {
+			PreparedStatement ps=conn.prepareStatement("delete from Bids where tenderID=?");
+			ps.setInt(1, vid);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 
 	@Override
@@ -288,5 +328,9 @@ public class Methods_Impl implements Methods{
 		}
 		return list;
 	}
+
+	
+
+	
 
 }

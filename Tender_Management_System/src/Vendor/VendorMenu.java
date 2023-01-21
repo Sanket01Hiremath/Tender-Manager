@@ -11,7 +11,7 @@ public class VendorMenu {
 		System.out.println(":------------------------------: Vendor Menu");
 		System.out.println("1) Get All Tenders");
 		System.out.println("2) Place Bid For Tenders");
-		System.out.println("3) View status of a Bid");
+		System.out.println("3) Delete Bid");
 		System.out.println("4) View Bid History");
 		System.out.println("5) LogOut");
 		System.out.print("Enter Your Choice: ");
@@ -24,7 +24,8 @@ public class VendorMenu {
 		case 2:placeBid pb=new placeBid();
 			pb.PlaceBid(id);
 			break;
-		case 3:
+		case 3:deleteBids db=new deleteBids();
+			db.DeleteBids(id);
 			break;
 		case 4:AllBidsOfVendor abv=new AllBidsOfVendor();
 			abv.getAllBids(id);
