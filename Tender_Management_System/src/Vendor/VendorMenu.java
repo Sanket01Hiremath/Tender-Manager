@@ -11,7 +11,7 @@ public class VendorMenu {
 		System.out.println(":------------------------------: Vendor Menu");
 		System.out.println("1) Get All Tenders");
 		System.out.println("2) Place Bid For Tenders");
-		System.out.println("3) View status of a Bid");
+		System.out.println("3) Update Password");
 		System.out.println("4) View Bid History");
 		System.out.println("5) LogOut");
 		
