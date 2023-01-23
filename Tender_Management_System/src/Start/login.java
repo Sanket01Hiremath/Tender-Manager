@@ -11,6 +11,9 @@ public class login {
 	public void Login() throws UserException, tenderException {
 		Scanner sc=new Scanner(System.in);
 		Methods m=new Methods_Impl();
+		System.out.println(":--------------------------------------------------------------------------------:");
+		System.out.println(":                        Online Tender Management System                         :");
+		System.out.println(":--------------------------------------------------------------------------------:");
 		System.out.println(":----------------------------------: Login");
 		System.out.print("Username: ");
 		String username=sc.next();
