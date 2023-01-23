@@ -33,9 +33,9 @@ Against each tender there may be   bids from several vendors. The company will t
 
 <h1>Tech-Stack: JAVA, RDBMS, JDBC DAO pattern<h1/>
 <h2>DataBase Schema : <h2/>
-<img src="https://github.com/Sanket01Hiremath/little-spark-7917/blob/master/Tender_Management_System/src/Untitled%20Diagram.drawio.png?raw=true"/>
+<img src="https://github.com/Sanket01Hiremath/little-spark-7917/blob/master/Untitled%20Diagram.drawio.png?raw=true"/>
 
 <h2>Application Flow Diagram : <h2/>
-<img src="https://github.com/Sanket01Hiremath/little-spark-7917/blob/master/Tender_Management_System/src/AppFlow%20Diagram.drawio.png?raw=true"/>
+<img src="https://github.com/Sanket01Hiremath/little-spark-7917/blob/master/AppFlow%20Diagram.drawio.png?raw=true"/>
 
 
