@@ -2,12 +2,10 @@ package Administrator;
 
 import java.util.Scanner;
 
-import Exception.UserException;
-import Exception.tenderException;
 import Start.login;
 
 public class AdminMenu {
-	public void Amenu(int id) throws UserException, tenderException{
+	public void Amenu(int id){
 		Scanner sc=new Scanner(System.in);
 		System.out.println(":------------------------------: Admin Menu");
 		System.out.println("1) Register New Vendor");
@@ -25,7 +23,7 @@ public class AdminMenu {
 		
 		switch(c) {
 		case 1:newVendor v=new newVendor();
-			v.addNewVendor();
+			v.addNewVendor(id);
 			break;
 		case 2:AllVendors a=new AllVendors();
 			a.getVendors(id);

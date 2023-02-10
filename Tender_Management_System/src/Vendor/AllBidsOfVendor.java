@@ -3,13 +3,11 @@ package Vendor;
 import java.util.List;
 import java.util.Scanner;
 import Beans.Bid;
-import Exception.UserException;
-import Exception.tenderException;
 import Interface.Methods;
 import Interface.Methods_Impl;
 
 public class AllBidsOfVendor {
-	public void getAllBids(int id) throws UserException, tenderException{
+	public void getAllBids(int id){
 		System.out.println(":-----------------------------: Bids History");
 		Methods m=new Methods_Impl();
 		Scanner sc=new Scanner(System.in);

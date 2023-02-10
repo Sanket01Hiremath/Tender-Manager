@@ -1,12 +1,10 @@
 package Vendor;
 
 import java.util.Scanner;
-import Exception.UserException;
-import Exception.tenderException;
 import Start.login;
 
 public class VendorMenu {
-	public void Vmenu(int id) throws UserException, tenderException{
+	public void Vmenu(int id){
 		Scanner sc=new Scanner(System.in);
 		System.out.println(":------------------------------: Vendor Menu");
 		System.out.println("1) Get All Tenders");

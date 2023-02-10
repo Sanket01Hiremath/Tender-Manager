@@ -3,14 +3,12 @@ package Administrator;
 import java.util.List;
 
 import Beans.user;
-import Exception.UserException;
-import Exception.tenderException;
 import Interface.Methods;
 import Interface.Methods_Impl;
 
 public class AllVendors {
 
-	public void getVendors(int id) throws UserException, tenderException {
+	public void getVendors(int id){
 		System.out.println(":------------------------------: All Vendors");
 		Methods m=new Methods_Impl();
 		List<user> list=m.getAllVendors();

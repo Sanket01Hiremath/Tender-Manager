@@ -12,8 +12,6 @@ import Beans.Bid;
 import Beans.tender;
 import Beans.user;
 import DBUtility.DBUtil;
-import Exception.UserException;
-import Exception.tenderException;
 import Start.login;
 import Vendor.VendorMenu;
 
@@ -21,7 +19,7 @@ import Vendor.VendorMenu;
 public class Methods_Impl implements Methods{
 
 	@Override
-	public void login(String username, String password) throws UserException, tenderException {
+	public void login(String username, String password){
 		Connection conn=DBUtil.getConnection();
 		try {
 			PreparedStatement ps=conn.prepareStatement("select * from users where username=? AND password=?");
@@ -39,30 +37,27 @@ public class Methods_Impl implements Methods{
 				}
 			}else {
 				System.out.println("Error: User Not Found!");
-				login l=new login();
-				l.Login();
+//				login l=new login();
+//				l.Login();
 			}
 		} catch (SQLException e) {
 			System.out.println("Error: User Not Found!");
 			System.out.println(e.getMessage());
-			login l=new login();
-			l.Login();
 		}
+		login l=new login();
+		l.Login();
 	}
 
 	@Override
-	public void NewVendor(user User) throws UserException, tenderException {
+	public void NewVendor(user User){
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("Insert into users values(?,?,?,?)");
-			ps.setInt(1, User.getId());
-			ps.setString(2, User.getUsername());
-			ps.setString(3, User.getPassword());
-			ps.setInt(4, User.getUserType());
+			PreparedStatement ps=conn.prepareStatement("Insert into users(username,password,user) values(?,?,?)");
+			ps.setString(1, User.getUsername());
+			ps.setString(2, User.getPassword());
+			ps.setInt(3, User.getUserType());
 			ps.executeUpdate();
 			System.out.println("New Vendor Added!");
-			AdminMenu a=new AdminMenu();
-			a.Amenu(User.getId());
 		} catch (SQLException e) {
 			System.out.println("Error: Vendor Not Added!");
 			System.out.println(e.getMessage());
@@ -88,18 +83,15 @@ public class Methods_Impl implements Methods{
 	}
 
 	@Override
-	public void NewTender(tender t,int id) throws UserException, tenderException {
+	public void NewTender(tender t){
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("Insert into tendor(ID,name,type,amount,status) values(?,?,?,?,0)");
-			ps.setInt(1, t.getId());
-			ps.setString(2, t.getName());
-			ps.setString(3, t.getType());
-			ps.setInt(4, t.getAmount());
+			PreparedStatement ps=conn.prepareStatement("Insert into tenders(name,type,amount,status) values(?,?,?,0)");
+			ps.setString(1, t.getName());
+			ps.setString(2, t.getType());
+			ps.setInt(3, t.getAmount());
 			ps.executeUpdate();
 			System.out.println("New Tender Added!");
-			AdminMenu a=new AdminMenu();
-			a.Amenu(id);
 		} catch (SQLException e) {
 			System.out.println("Error: New Tender Not Added!");
 			System.out.println(e.getMessage());
@@ -107,11 +99,11 @@ public class Methods_Impl implements Methods{
 	}
 
 	@Override
-	public List<tender> getAllTenders() throws tenderException {
+	public List<tender> getAllTenders(){
 		List<tender> list=new ArrayList<>();
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select * from tendor");
+			PreparedStatement ps=conn.prepareStatement("select * from tenders");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
 				list.add(new tender(rs.getInt("ID"),rs.getString("name"),rs.getString("type"),rs.getInt("amount"),rs.getInt("bidPrice"),rs.getInt("status"),rs.getInt("vendorID")));
@@ -148,7 +140,7 @@ public class Methods_Impl implements Methods{
 		int[] arr=new int[2];
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select vendorID,bidPrice from bids where tenderID=? order by bidPrice DESC LIMIT 1");
+			PreparedStatement ps=conn.prepareStatement("select ID,vendorID,bidPrice from bids where tenderID=? order by bidPrice DESC LIMIT 1");
 			ps.setInt(1, id);
 			ResultSet rs=ps.executeQuery();
 			if(rs.next()) {
@@ -165,7 +157,7 @@ public class Methods_Impl implements Methods{
 	@Override
 	public void assignTender(int Tid, int Vid, int bidPrice) {
 		Connection conn=DBUtil.getConnection();
-		try(PreparedStatement ps=conn.prepareStatement("update tendor set vendorID=?,bidPrice=?,status=1 where ID=? AND status=0")) {
+		try(PreparedStatement ps=conn.prepareStatement("update tenders set vendorID=?,bidPrice=?,status=1 where ID=? AND status=0")) {
 			ps.setInt(1, Vid);
 			ps.setInt(2, bidPrice);
 			ps.setInt(3, Tid);
@@ -188,13 +180,13 @@ public class Methods_Impl implements Methods{
 	public void deleteTender(int Tid) {
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("delete from tendor where ID=?");
+			PreparedStatement ps=conn.prepareStatement("delete from tenders where ID=? AND status=0");
 			ps.setInt(1, Tid);
 			int i=ps.executeUpdate();
 			if(i==1) {
 				System.out.println("Tender Deleted Successfully!");
 			}else {
-				System.out.println("Error: Tender Not Found");
+				System.out.println("Error: Tender Not Found/Can't Be Deleted");
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -235,7 +227,7 @@ public class Methods_Impl implements Methods{
 	public void deleteBidByTid(int tid) {
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("delete from Bids where vendorID=?");
+			PreparedStatement ps=conn.prepareStatement("delete from Bids where tenderID=?");
 			ps.setInt(2, tid);
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -247,7 +239,7 @@ public class Methods_Impl implements Methods{
 	public void deleteBidByVid(int vid) {
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("delete from Bids where tenderID=?");
+			PreparedStatement ps=conn.prepareStatement("delete from Bids where vendorID=?");
 			ps.setInt(1, vid);
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -260,7 +252,7 @@ public class Methods_Impl implements Methods{
 	public void placeBid(int tid,int vid,int amount) {
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("insert into bids values(?,?,?)");
+			PreparedStatement ps=conn.prepareStatement("insert into bids(tenderID,vendorID,bidPrice) values(?,?,?)");
 			ps.setInt(1, tid);
 			ps.setInt(2, vid);
 			ps.setInt(3, amount);
@@ -276,7 +268,7 @@ public class Methods_Impl implements Methods{
 		List<tender> list=new ArrayList<>();
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select * from tendor where status=0");
+			PreparedStatement ps=conn.prepareStatement("select * from tenders where status=0");
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {
 				list.add(new tender(rs.getInt("ID"),rs.getString("name"),rs.getString("type"),rs.getInt("amount"),rs.getInt("bidPrice"),rs.getInt("status"),rs.getInt("vendorID")));
@@ -314,7 +306,7 @@ public class Methods_Impl implements Methods{
 		List<tender> list=new ArrayList<>();
 		Connection conn=DBUtil.getConnection();
 		try {
-			PreparedStatement ps=conn.prepareStatement("select * from tendor where vendorID=?");
+			PreparedStatement ps=conn.prepareStatement("select * from tenders where vendorID=?");
 			ps.setInt(1, id);
 			ResultSet rs=ps.executeQuery();
 			while(rs.next()) {

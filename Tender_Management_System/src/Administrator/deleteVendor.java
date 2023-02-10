@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import Beans.tender;
-import Exception.UserException;
-import Exception.tenderException;
 import Interface.Methods;
 import Interface.Methods_Impl;
 
 public class deleteVendor {
-	public void DeleteVendor(int id) throws UserException, tenderException {
+	public void DeleteVendor(int id){
 		System.out.println(":---------------------------: Delete Vendors");
 		Methods m=new Methods_Impl();
 		Scanner sc=new Scanner(System.in);

@@ -4,13 +4,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import Beans.tender;
-import Exception.UserException;
-import Exception.tenderException;
 import Interface.Methods;
 import Interface.Methods_Impl;
 
 public class placeBid {
-	public void PlaceBid(int id) throws UserException, tenderException{
+	public void PlaceBid(int id){
 		System.out.println(":-----------------------------: Open Tenders");
 		Methods m=new Methods_Impl();
 		List<tender> list=m.openTenders();

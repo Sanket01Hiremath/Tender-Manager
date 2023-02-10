@@ -3,13 +3,11 @@ package Vendor;
 import java.util.List;
 
 import Beans.tender;
-import Exception.UserException;
-import Exception.tenderException;
 import Interface.Methods;
 import Interface.Methods_Impl;
 
 public class AllTenders {
-	public void getTenders(int id) throws UserException, tenderException{
+	public void getTenders(int id){
 		System.out.println(":------------------------------: All Tenders");
 		Methods m=new Methods_Impl();
 		List<tender> list=m.AllTendersOfVendor(id);
