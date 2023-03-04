@@ -2,6 +2,7 @@ package Vendor;
 
 import java.util.List;
 import java.util.Scanner;
+
 import Beans.Bid;
 import Interface.Methods;
 import Interface.Methods_Impl;
