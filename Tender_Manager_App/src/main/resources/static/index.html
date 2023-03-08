@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <title>Web Application</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+	
+	<div id="nav">
+		<div>
+			<h1>Tender Manager</h1>
+		</div>
+		<div id="page">
+			<a class="navbutton">Admin</a>
+			<a class="navbutton">Vendor</a>
+			<a class="navbutton">user</a>
+		</div>
+	</div>
+	
+	<div id="btn">
+		<a class="button" onClick="getapi(getTenders,'tender');">Get Tenders</a>
+		<a class="button" onClick="getapi(getVendors,'vendor');">Get Vendors</a>
+	</div>
+	
+	<div>
+	    <h1 id="tableHead"></h1>
+		<table id="table"></table>
+	</div>
+	
+</body>
+<script src="tenders.js"></script>
+</html>
