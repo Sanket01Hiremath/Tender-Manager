@@ -21,10 +21,7 @@
 			heading.innerText="Vendors";
 		}
 	}
-	// Calling that async function
 	
-	
-	 
 	// Function to define innerHTML for HTML table
 	function showTenders(data) {
 	    let tab = 
