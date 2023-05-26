@@ -21,7 +21,6 @@ import com.example.entities.Tenders;
 import com.example.entities.Users;
 
 @RestController
-@RequestMapping("/Vendor")
 public class VendorController {
 	@Autowired
 	private VendorServices vendorService;
